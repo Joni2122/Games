@@ -2,88 +2,50 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Mini-Arcade – 10 Spiele</title>
+  <title>Arcade 10 – Browser Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui, sans-serif;
     }
 
     body {
-      background: radial-gradient(circle at top, #1f2933, #020617);
-      color: #f9fafb;
-      min-height: 100vh;
+      background: #020617;
+      color: #f8fafc;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
       padding: 20px;
     }
 
     .app {
       width: 100%;
       max-width: 1200px;
-      background: rgba(15, 23, 42, 0.95);
-      border-radius: 18px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      background: #0f172a;
+      border-radius: 16px;
       overflow: hidden;
-      border: 1px solid rgba(148, 163, 184, 0.3);
       display: grid;
-      grid-template-columns: 320px 1fr;
-      min-height: 650px;
+      grid-template-columns: 300px 1fr;
+      border: 1px solid #334155;
     }
 
+    /* SIDEBAR */
     .sidebar {
-      background: linear-gradient(180deg, #020617, #020617 40%, #0b1120);
-      border-right: 1px solid rgba(148, 163, 184, 0.3);
-      padding: 20px 18px;
+      background: #0b1120;
+      padding: 20px;
+      border-right: 1px solid #334155;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-
-    .logo-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      background: conic-gradient(from 180deg, #22c55e, #0ea5e9, #6366f1, #22c55e);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #0b1120;
-      font-weight: 800;
-      font-size: 18px;
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
-    }
-
-    .logo-text-main {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
-      letter-spacing: 0.03em;
-    }
-
-    .logo-text-sub {
-      font-size: 11px;
-      color: #9ca3af;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-
-    .sidebar-section-title {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #6b7280;
-      margin-top: 10px;
-      margin-bottom: 4px;
+      margin-bottom: 10px;
     }
 
     .game-list {
@@ -91,252 +53,84 @@
       flex-direction: column;
       gap: 8px;
       overflow-y: auto;
-      padding-right: 4px;
-      flex: 1;
     }
 
     .game-button {
-      width: 100%;
-      text-align: left;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid transparent;
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
+      padding: 10px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: all 0.15s ease-out;
-      font-size: 13px;
+      color: #e2e8f0;
+      text-align: left;
+      transition: 0.2s;
     }
 
     .game-button:hover {
-      background: rgba(30, 64, 175, 0.6);
-      border-color: rgba(129, 140, 248, 0.8);
-      transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(30, 64, 175, 0.5);
+      background: #334155;
     }
 
     .game-button.active {
-      background: linear-gradient(135deg, #22c55e, #0ea5e9);
-      border-color: transparent;
-      color: #0b1120;
-      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.5);
-    }
-
-    .game-button-title {
+      background: #38bdf8;
+      color: #0f172a;
       font-weight: 600;
     }
 
-    .game-button-tag {
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      color: #9ca3af;
-    }
-
-    .game-button.active .game-button-tag {
-      background: rgba(15, 23, 42, 0.9);
-      color: #a5b4fc;
-      border-color: rgba(191, 219, 254, 0.9);
-    }
-
-    .sidebar-footer {
-      font-size: 11px;
-      color: #6b7280;
-      border-top: 1px solid rgba(31, 41, 55, 0.9);
-      padding-top: 10px;
-      margin-top: 4px;
-    }
-
-    .sidebar-footer span {
-      color: #e5e7eb;
-      font-weight: 500;
-    }
-
+    /* MAIN */
     .main {
-      padding: 18px 20px 20px 20px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 55%),
-                  radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.12), transparent 55%),
-                  #020617;
-    }
-
-    .main-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .main-title {
-      font-size: 22px;
-      font-weight: 700;
-    }
-
-    .main-subtitle {
-      font-size: 12px;
-      color: #9ca3af;
-      margin-top: 2px;
-    }
-
-    .main-badges {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .badge {
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.8);
-      color: #e5e7eb;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 8px rgba(34, 197, 94, 0.9);
+      gap: 16px;
     }
 
     .game-container {
-      flex: 1;
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
-      border-radius: 16px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      padding: 14px 14px 16px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .game-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .game-header-left {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .game-name {
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    .game-meta {
-      font-size: 11px;
-      color: #9ca3af;
-    }
-
-    .game-controls {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .btn {
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.15s ease-out;
-    }
-
-    .btn:hover {
-      background: rgba(37, 99, 235, 0.9);
-      border-color: rgba(191, 219, 254, 0.9);
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.6);
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #22c55e, #0ea5e9);
-      border-color: transparent;
-      color: #0b1120;
-      font-weight: 600;
-    }
-
-    .btn-primary:hover {
-      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.6);
-      transform: translateY(-1px);
-    }
-
-    .game-view {
-      flex: 1;
+      background: #020617;
+      border: 1px solid #334155;
       border-radius: 12px;
-      background: radial-gradient(circle at top, #020617, #020617 40%, #020617);
-      border: 1px solid rgba(31, 41, 55, 0.9);
-      overflow: hidden;
-      position: relative;
+      padding: 12px;
       display: flex;
-      align-items: stretch;
-      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
     }
 
     canvas {
-      background: #020617;
-      display: block;
-    }
-
-    .game-overlay-info {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      color: #e5e7eb;
-    }
-
-    .game-help {
-      font-size: 11px;
-      color: #9ca3af;
-      margin-top: 2px;
+      background: #000;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
     }
 
     .scoreboard {
       display: flex;
       gap: 10px;
-      font-size: 12px;
-      color: #e5e7eb;
-      margin-top: 2px;
       flex-wrap: wrap;
     }
 
     .score-pill {
-      padding: 3px 8px;
+      padding: 4px 8px;
+      background: #1e293b;
+      border: 1px solid #334155;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 12px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 6px 10px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #e2e8f0;
+    }
+
+    .btn:hover {
+      background: #334155;
     }
 
     @media (max-width: 900px) {
@@ -345,1093 +139,711 @@
       }
       .sidebar {
         border-right: none;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.3);
-        max-height: 260px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .main-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .main-badges {
-        justify-content: flex-start;
+        border-bottom: 1px solid #334155;
       }
     }
   </style>
 </head>
+
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div class="logo">
-        <div class="logo-icon">A</div>
-        <div>
-          <div class="logo-text-main">Arcade 10</div>
-          <div class="logo-text-sub">HTML5 Mini Games</div>
-        </div>
-      </div>
-
-      <div class="sidebar-section-title">Spiele</div>
-      <div class="game-list" id="gameList">
-        <!-- Buttons werden per JS eingefügt -->
-      </div>
-
-      <div class="sidebar-footer">
-        <span>Hinweis:</span> Alle Spiele laufen komplett im Browser (HTML, CSS, JS).
-      </div>
+      <div class="logo">Arcade 10</div>
+      <div class="game-list" id="gameList"></div>
     </aside>
 
     <main class="main">
-      <header class="main-header">
-        <div>
-          <div class="main-title">Mini-Arcade im Browser</div>
-          <div class="main-subtitle">
-            Wähle links ein Spiel aus. Kein Pixel-Schrott – alles echte Canvas/DOM-Games.
-          </div>
-        </div>
-        <div class="main-badges">
-          <div class="badge">
-            <span class="badge-dot"></span> Live im Browser
-          </div>
-          <div class="badge">10 Spiele</div>
-          <div class="badge">Nur HTML / CSS / JS</div>
-        </div>
-      </header>
+      <h2 id="gameTitle">Wähle ein Spiel</h2>
+      <p id="gameMeta">Klicke links auf ein Spiel.</p>
 
-      <section class="game-container">
-        <div class="game-header">
-          <div class="game-header-left">
-            <div class="game-name" id="gameTitle">Wähle ein Spiel</div>
-            <div class="game-meta" id="gameMeta">Klicke links auf einen Titel, um zu starten.</div>
-            <div class="scoreboard" id="scoreboard"></div>
-          </div>
-          <div class="game-controls">
-            <button class="btn" id="btnHelp">Steuerung anzeigen</button>
-            <button class="btn btn-primary" id="btnRestart">Neu starten</button>
-          </div>
-        </div>
+      <div class="controls">
+        <button class="btn" id="btnHelp">Steuerung</button>
+        <button class="btn" id="btnRestart">Neu starten</button>
+      </div>
 
-        <div class="game-help" id="gameHelpText">
-          Tipp: Starte mit „Brick Breaker“ oder „Snake Neo“, wenn du etwas Klassisches willst.
-        </div>
+      <div class="scoreboard" id="scoreboard"></div>
 
-        <div class="game-view">
-          <canvas id="gameCanvas" width="800" height="480"></canvas>
-          <div class="game-overlay-info" id="overlayInfo">Kein Spiel aktiv</div>
-        </div>
-      </section>
+      <div class="game-container">
+        <canvas id="gameCanvas" width="800" height="480"></canvas>
+        <div id="overlayInfo" style="font-size:12px;color:#94a3b8;">Kein Spiel aktiv</div>
+      </div>
     </main>
   </div>
 
   <script>
-    // --- Globale Arcade-Struktur ---
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
 
+    const gameListEl = document.getElementById("gameList");
     const gameTitleEl = document.getElementById("gameTitle");
     const gameMetaEl = document.getElementById("gameMeta");
-    const gameHelpTextEl = document.getElementById("gameHelpText");
-    const overlayInfoEl = document.getElementById("overlayInfo");
     const scoreboardEl = document.getElementById("scoreboard");
-    const gameListEl = document.getElementById("gameList");
+    const overlayInfoEl = document.getElementById("overlayInfo");
 
     const btnHelp = document.getElementById("btnHelp");
     const btnRestart = document.getElementById("btnRestart");
 
-    let currentGame = null;
     let currentGameId = null;
+    let currentGame = null;
     let animationId = null;
     let keys = {};
 
-    window.addEventListener("keydown", (e) => {
-      keys[e.key.toLowerCase()] = true;
-    });
+    window.addEventListener("keydown", (e) => keys[e.key.toLowerCase()] = true);
+    window.addEventListener("keyup", (e) => keys[e.key.toLowerCase()] = false);
 
-    window.addEventListener("keyup", (e) => {
-      keys[e.key.toLowerCase()] = false;
-    });
-
-    // --- Game-Registry: 10 Spiele ---
+    function updateOverlay(t) { overlayInfoEl.textContent = t; }
+    function setScoreboard(items) {
+      scoreboardEl.innerHTML = "";
+      items.forEach(i => {
+        const pill = document.createElement("div");
+        pill.className = "score-pill";
+        pill.textContent = `${i.label}: ${i.value}`;
+        scoreboardEl.appendChild(pill);
+      });
+    }
+    /* ----------------------------------------------------
+       SPIELE-REGISTRIERUNG
+    ---------------------------------------------------- */
     const games = [
-      {
-        id: "brick-breaker",
-        name: "Brick Breaker Neo",
-        tag: "Arcade",
-        description: "Zerstöre alle Blöcke mit dem Ball. Klassischer Breakout-Stil mit glatten Bewegungen.",
-        controls: "Links/Rechts mit Pfeiltasten oder A/D. Leertaste zum Starten.",
-        init: initBrickBreaker,
-      },
-      {
-        id: "snake-neo",
-        name: "Snake Neo",
-        tag: "Classic",
-        description: "Moderne Snake-Variante mit smoothen Bewegungen und Score-Anzeige.",
-        controls: "Pfeiltasten oder WASD zum Steuern.",
-        init: initSnakeNeo,
-      },
-      {
-        id: "pong-duel",
-        name: "Pong Duel",
-        tag: "2 Spieler",
-        description: "Klassisches Pong – links und rechts ein Schläger.",
-        controls: "Links: W/S, Rechts: Pfeil hoch/runter.",
-        init: initPongDuel,
-      },
-      {
-        id: "memory-cards",
-        name: "Memory Cards",
-        tag: "Denken",
-        description: "Finde Kartenpaare in einem kleinen Memory-Spiel.",
-        controls: "Mit der Maus auf Karten klicken.",
-        init: initMemoryCards,
-      },
-      {
-        id: "flappy-square",
-        name: "Flappy Square",
-        tag: "Reflexe",
-        description: "Weiche den Hindernissen aus, indem du dein Quadrat in der Luft hältst.",
-        controls: "Leertaste oder Mausklick zum Flappen.",
-        init: initFlappySquare,
-      },
-      {
-        id: "endless-runner",
-        name: "Neon Runner",
-        tag: "Runner",
-        description: "Springe über Hindernisse in einem simplen Endless Runner.",
-        controls: "Leertaste oder Pfeil hoch zum Springen.",
-        init: initNeonRunner,
-      },
-      {
-        id: "tictactoe",
-        name: "Tic Tac Toe+",
-        tag: "Strategie",
-        description: "Spiele Tic Tac Toe gegen einen simplen Bot.",
-        controls: "Mit der Maus auf ein Feld klicken.",
-        init: initTicTacToePlus,
-      },
-      {
-        id: "reaction-test",
-        name: "Reaction Test",
-        tag: "Speed",
-        description: "Reagiere so schnell wie möglich, wenn der Bildschirm grün wird.",
-        controls: "Klicke so schnell wie möglich, wenn es grün wird.",
-        init: initReactionTest,
-      },
-      {
-        id: "space-avoid",
-        name: "Space Avoider",
-        tag: "Arcade",
-        description: "Weiche Asteroiden aus und überlebe so lange wie möglich.",
-        controls: "Pfeiltasten oder WASD zum Bewegen.",
-        init: initSpaceAvoider,
-      },
-      {
-        id: "connect4",
-        name: "Connect 4 Lite",
-        tag: "Denken",
-        description: "Lege abwechselnd Steine und versuche vier in eine Reihe zu bekommen.",
-        controls: "Mit der Maus eine Spalte auswählen.",
-        init: initConnect4Lite,
-      },
+      { id: "brick", name: "Brick Breaker Neo", tag: "Arcade", controls: "Links/Rechts oder A/D, Space starten", init: initBrickBreaker },
+      { id: "snake", name: "Snake Neo", tag: "Classic", controls: "WASD oder Pfeiltasten", init: initSnakeNeo },
+      { id: "pong", name: "Pong Duel", tag: "2 Spieler", controls: "W/S links – Pfeile rechts", init: initPongDuel },
+      { id: "memory", name: "Memory Cards", tag: "Denken", controls: "Tippen/Klicken", init: initMemoryCards },
+      { id: "flappy", name: "Flappy Square", tag: "Reflexe", controls: "Tippen/Space", init: initFlappySquare },
+      { id: "runner", name: "Neon Runner", tag: "Runner", controls: "Tippen/Space", init: initNeonRunner },
+      { id: "tictactoe", name: "Tic Tac Toe+", tag: "Strategie", controls: "Tippen", init: initTicTacToePlus },
+      { id: "reaction", name: "Reaction Test", tag: "Speed", controls: "Tippen", init: initReactionTest },
+      { id: "space", name: "Space Avoider", tag: "Arcade", controls: "WASD / Pfeile / Touch", init: initSpaceAvoider },
+      { id: "connect4", name: "Connect 4 Lite", tag: "Denken", controls: "Tippen", init: initConnect4Lite }
     ];
 
-    // --- Sidebar Buttons erzeugen ---
+    /* ----------------------------------------------------
+       SIDEBAR AUFBAU
+    ---------------------------------------------------- */
     function renderGameList() {
       gameListEl.innerHTML = "";
-      games.forEach((game) => {
+      games.forEach(g => {
         const btn = document.createElement("button");
         btn.className = "game-button";
-        btn.dataset.gameId = game.id;
-
-        const titleSpan = document.createElement("span");
-        titleSpan.className = "game-button-title";
-        titleSpan.textContent = game.name;
-
-        const tagSpan = document.createElement("span");
-        tagSpan.className = "game-button-tag";
-        tagSpan.textContent = game.tag;
-
-        btn.appendChild(titleSpan);
-        btn.appendChild(tagSpan);
-
-        btn.addEventListener("click", () => selectGame(game.id));
+        btn.textContent = g.name;
+        btn.dataset.id = g.id;
+        btn.onclick = () => selectGame(g.id);
         gameListEl.appendChild(btn);
       });
     }
 
-    function setActiveButton(gameId) {
-      const buttons = gameListEl.querySelectorAll(".game-button");
-      buttons.forEach((btn) => {
-        if (btn.dataset.gameId === gameId) {
-          btn.classList.add("active");
-        } else {
-          btn.classList.remove("active");
-        }
+    function setActiveButton(id) {
+      document.querySelectorAll(".game-button").forEach(b => {
+        b.classList.toggle("active", b.dataset.id === id);
       });
     }
 
-    function selectGame(gameId) {
-      const game = games.find((g) => g.id === gameId);
+    /* ----------------------------------------------------
+       SPIEL WECHSELN
+    ---------------------------------------------------- */
+    function selectGame(id) {
+      const game = games.find(g => g.id === id);
       if (!game) return;
 
-      currentGameId = gameId;
-      setActiveButton(gameId);
+      currentGameId = id;
+      setActiveButton(id);
 
       gameTitleEl.textContent = game.name;
-      gameMetaEl.textContent = game.description;
-      gameHelpTextEl.textContent = "Steuerung: " + game.controls;
-      overlayInfoEl.textContent = "Lädt " + game.name + "...";
+      gameMetaEl.textContent = game.controls;
+      updateOverlay("Lädt…");
 
-      scoreboardEl.innerHTML = "";
-
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-        animationId = null;
-      }
-
+      if (animationId) cancelAnimationFrame(animationId);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       currentGame = game.init();
     }
 
-    btnHelp.addEventListener("click", () => {
-      if (!currentGameId) {
-        alert("Wähle zuerst ein Spiel aus.");
-        return;
-      }
-      const game = games.find((g) => g.id === currentGameId);
-      if (game) {
-        alert("Steuerung für \"" + game.name + "\":\n\n" + game.controls);
-      }
-    });
+    btnHelp.onclick = () => {
+      if (!currentGameId) return alert("Wähle zuerst ein Spiel.");
+      const g = games.find(x => x.id === currentGameId);
+      alert("Steuerung:\n" + g.controls);
+    };
 
-    btnRestart.addEventListener("click", () => {
-      if (!currentGameId) {
-        alert("Wähle zuerst ein Spiel aus.");
-        return;
-      }
+    btnRestart.onclick = () => {
+      if (!currentGameId) return alert("Wähle zuerst ein Spiel.");
       selectGame(currentGameId);
-    });
+    };
 
-    // --- Hilfsfunktionen für Scoreboard ---
-    function setScoreboard(items) {
-      scoreboardEl.innerHTML = "";
-      items.forEach((item) => {
-        const pill = document.createElement("div");
-        pill.className = "score-pill";
-        pill.textContent = item.label + ": " + item.value;
-        scoreboardEl.appendChild(pill);
-      });
-    }
-
-    function updateOverlay(text) {
-      overlayInfoEl.textContent = text;
-    }
-
-    // ----------------------------------------------------
-    // SPIEL 1: BRICK BREAKER NEO
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       SPIEL 1: BRICK BREAKER
+    ---------------------------------------------------- */
     function initBrickBreaker() {
-      const state = {
-        paddleWidth: 110,
-        paddleHeight: 16,
-        paddleX: canvas.width / 2 - 55,
-        paddleY: canvas.height - 40,
-        ballX: canvas.width / 2,
-        ballY: canvas.height / 2,
-        ballRadius: 8,
-        ballSpeedX: 4,
-        ballSpeedY: -4,
-        running: false,
+      const s = {
+        px: canvas.width/2 - 50,
+        py: canvas.height - 40,
+        pw: 100,
+        ph: 12,
+        bx: canvas.width/2,
+        by: canvas.height/2,
+        br: 8,
+        vx: 4,
+        vy: -4,
+        running: true,
         bricks: [],
         rows: 5,
         cols: 10,
-        brickWidth: 70,
-        brickHeight: 20,
-        brickPadding: 6,
-        brickOffsetTop: 50,
-        brickOffsetLeft: 30,
-        lives: 3,
         score: 0,
+        lives: 3
       };
 
-      function createBricks() {
-        state.bricks = [];
-        for (let r = 0; r < state.rows; r++) {
-          for (let c = 0; c < state.cols; c++) {
-            const x = state.brickOffsetLeft + c * (state.brickWidth + state.brickPadding);
-            const y = state.brickOffsetTop + r * (state.brickHeight + state.brickPadding);
-            state.bricks.push({
-              x,
-              y,
-              w: state.brickWidth,
-              h: state.brickHeight,
-              alive: true,
-              color: `hsl(${200 + r * 20}, 80%, ${55 + c * 1.2}%)`,
+      function makeBricks() {
+        s.bricks = [];
+        for (let r=0;r<s.rows;r++) {
+          for (let c=0;c<s.cols;c++) {
+            s.bricks.push({
+              x: 30 + c*72,
+              y: 50 + r*26,
+              w: 60,
+              h: 20,
+              alive: true
             });
           }
         }
       }
+      makeBricks();
 
-      createBricks();
-      setScoreboard([
-        { label: "Score", value: state.score },
-        { label: "Leben", value: state.lives },
-      ]);
-      updateOverlay("Leertaste: Start / Pause");
+      setScoreboard([{label:"Score",value:s.score},{label:"Leben",value:s.lives}]);
+      updateOverlay("Space pausiert");
 
-      function resetBall() {
-        state.ballX = canvas.width / 2;
-        state.ballY = canvas.height / 2;
-        state.ballSpeedX = 4 * (Math.random() > 0.5 ? 1 : -1);
-        state.ballSpeedY = -4;
-      }
-
-      window.addEventListener("keydown", (e) => {
-        if (currentGameId !== "brick-breaker") return;
-        if (e.code === "Space") {
-          state.running = !state.running;
-          if (state.running) loop();
-        }
-      });
+      window.onkeydown = e => {
+        if (currentGameId !== "brick") return;
+        if (e.code === "Space") s.running = !s.running;
+      };
 
       function update() {
-        const speed = 7;
-        if (keys["arrowleft"] || keys["a"]) {
-          state.paddleX -= speed;
-        }
-        if (keys["arrowright"] || keys["d"]) {
-          state.paddleX += speed;
-        }
-        state.paddleX = Math.max(20, Math.min(canvas.width - state.paddleWidth - 20, state.paddleX));
+        if (!s.running) return;
 
-        if (!state.running) return;
+        if (keys["arrowleft"]||keys["a"]) s.px -= 6;
+        if (keys["arrowright"]||keys["d"]) s.px += 6;
+        s.px = Math.max(10, Math.min(canvas.width - s.pw - 10, s.px));
 
-        state.ballX += state.ballSpeedX;
-        state.ballY += state.ballSpeedY;
+        s.bx += s.vx;
+        s.by += s.vy;
 
-        if (state.ballX < state.ballRadius || state.ballX > canvas.width - state.ballRadius) {
-          state.ballSpeedX *= -1;
-        }
-        if (state.ballY < state.ballRadius) {
-          state.ballSpeedY *= -1;
+        if (s.bx < s.br || s.bx > canvas.width - s.br) s.vx *= -1;
+        if (s.by < s.br) s.vy *= -1;
+
+        if (s.by > canvas.height) {
+          s.lives--;
+          if (s.lives <= 0) {
+            updateOverlay("Game Over – Score: "+s.score);
+            s.running = false;
+          } else {
+            s.bx = canvas.width/2;
+            s.by = canvas.height/2;
+            s.vx = 4;
+            s.vy = -4;
+          }
         }
 
         if (
-          state.ballX > state.paddleX &&
-          state.ballX < state.paddleX + state.paddleWidth &&
-          state.ballY + state.ballRadius > state.paddleY &&
-          state.ballY - state.ballRadius < state.paddleY + state.paddleHeight
-        ) {
-          state.ballSpeedY *= -1;
-          const hitPos = (state.ballX - (state.paddleX + state.paddleWidth / 2)) / (state.paddleWidth / 2);
-          state.ballSpeedX = hitPos * 5;
-        }
+          s.bx > s.px && s.bx < s.px+s.pw &&
+          s.by+s.br > s.py && s.by-s.br < s.py+s.ph
+        ) s.vy *= -1;
 
-        if (state.ballY > canvas.height + 20) {
-          state.lives--;
-          if (state.lives <= 0) {
-            updateOverlay("Game Over – Score: " + state.score);
-            state.running = false;
-          } else {
-            resetBall();
-            state.running = false;
-            updateOverlay("Verloren! Leertaste für neuen Versuch.");
-          }
-        }
-
-        let remaining = 0;
-        state.bricks.forEach((b) => {
+        s.bricks.forEach(b => {
           if (!b.alive) return;
-          remaining++;
           if (
-            state.ballX > b.x &&
-            state.ballX < b.x + b.w &&
-            state.ballY - state.ballRadius < b.y + b.h &&
-            state.ballY + state.ballRadius > b.y
+            s.bx > b.x && s.bx < b.x+b.w &&
+            s.by > b.y && s.by < b.y+b.h
           ) {
             b.alive = false;
-            state.ballSpeedY *= -1;
-            state.score += 10;
+            s.vy *= -1;
+            s.score += 10;
+            setScoreboard([{label:"Score",value:s.score},{label:"Leben",value:s.lives}]);
           }
         });
-
-        if (remaining === 0) {
-          updateOverlay("Level geschafft! Leertaste für neues Level.");
-          createBricks();
-          resetBall();
-          state.running = false;
-        }
-
-        setScoreboard([
-          { label: "Score", value: state.score },
-          { label: "Leben", value: state.lives },
-        ]);
       }
 
       function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
 
-        const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-        grad.addColorStop(0, "#020617");
-        grad.addColorStop(1, "#0f172a");
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle="#38bdf8";
+        ctx.fillRect(s.px,s.py,s.pw,s.ph);
 
-        ctx.fillStyle = "#1e293b";
-        ctx.fillRect(0, 0, canvas.width, 40);
-        ctx.fillStyle = "#e5e7eb";
-        ctx.font = "14px system-ui";
-        ctx.fillText("Brick Breaker Neo", 16, 24);
-
-        state.bricks.forEach((b) => {
-          if (!b.alive) return;
-          ctx.fillStyle = b.color;
-          ctx.fillRect(b.x, b.y, b.w, b.h);
-          ctx.strokeStyle = "rgba(15,23,42,0.7)";
-          ctx.lineWidth = 1;
-          ctx.strokeRect(b.x + 0.5, b.y + 0.5, b.w - 1, b.h - 1);
-        });
-
-        ctx.fillStyle = "#38bdf8";
-        ctx.fillRect(state.paddleX, state.paddleY, state.paddleWidth, state.paddleHeight);
-        ctx.shadowColor = "#38bdf8";
-        ctx.shadowBlur = 15;
         ctx.beginPath();
-        ctx.arc(state.ballX, state.ballY, state.ballRadius, 0, Math.PI * 2);
-        ctx.fillStyle = "#f97316";
+        ctx.arc(s.bx,s.by,s.br,0,Math.PI*2);
+        ctx.fillStyle="#f97316";
         ctx.fill();
-        ctx.shadowBlur = 0;
 
-        ctx.fillStyle = "rgba(148,163,184,0.4)";
-        ctx.fillRect(0, canvas.height - 10, canvas.width, 10);
+        ctx.fillStyle="#1e293b";
+        s.bricks.forEach(b=>{
+          if(b.alive) ctx.fillRect(b.x,b.y,b.w,b.h);
+        });
       }
 
       function loop() {
-        if (currentGameId !== "brick-breaker") return;
+        if (currentGameId !== "brick") return;
         update();
         draw();
         animationId = requestAnimationFrame(loop);
       }
-
       loop();
-
-      return {
-        type: "brick-breaker",
-      };
     }
 
-    // ----------------------------------------------------
-    // SPIEL 2: SNAKE NEO
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       SPIEL 2: SNAKE NEO
+    ---------------------------------------------------- */
     function initSnakeNeo() {
-      const gridSize = 20;
-      const cols = Math.floor(canvas.width / gridSize);
-      const rows = Math.floor(canvas.height / gridSize);
+      const size = 20;
+      const cols = Math.floor(canvas.width/size);
+      const rows = Math.floor(canvas.height/size);
 
-      const state = {
-        snake: [{ x: Math.floor(cols / 2), y: Math.floor(rows / 2) }],
-        dir: { x: 1, y: 0 },
-        nextDir: { x: 1, y: 0 },
-        food: null,
-        speed: 7,
-        frame: 0,
-        score: 0,
-        gameOver: false,
+      const s = {
+        snake: [{x:10,y:10}],
+        dir:{x:1,y:0},
+        next:{x:1,y:0},
+        food:null,
+        score:0,
+        over:false,
+        frame:0
       };
 
       function placeFood() {
-        let valid = false;
-        let fx, fy;
-        while (!valid) {
-          fx = Math.floor(Math.random() * cols);
-          fy = Math.floor(Math.random() * rows);
-          valid = !state.snake.some((s) => s.x === fx && s.y === fy);
-        }
-        state.food = { x: fx, y: fy };
+        let x,y;
+        do {
+          x = Math.floor(Math.random()*cols);
+          y = Math.floor(Math.random()*rows);
+        } while (s.snake.some(p=>p.x===x&&p.y===y));
+        s.food={x,y};
       }
-
       placeFood();
-      setScoreboard([{ label: "Score", value: state.score }]);
-      updateOverlay("Pfeiltasten / WASD zum Steuern");
 
-      window.addEventListener("keydown", (e) => {
-        if (currentGameId !== "snake-neo") return;
-        const key = e.key.toLowerCase();
-        if (key === "arrowup" || key === "w") {
-          if (state.dir.y === 1) return;
-          state.nextDir = { x: 0, y: -1 };
-        } else if (key === "arrowdown" || key === "s") {
-          if (state.dir.y === -1) return;
-          state.nextDir = { x: 0, y: 1 };
-        } else if (key === "arrowleft" || key === "a") {
-          if (state.dir.x === 1) return;
-          state.nextDir = { x: -1, y: 0 };
-        } else if (key === "arrowright" || key === "d") {
-          if (state.dir.x === -1) return;
-          state.nextDir = { x: 1, y: 0 };
-        }
-      });
+      setScoreboard([{label:"Score",value:s.score}]);
+      updateOverlay("WASD / Pfeile / Wischen");
+
+      window.onkeydown = e => {
+        if (currentGameId!=="snake") return;
+        const k=e.key.toLowerCase();
+        if(k==="arrowup"||k==="w") s.next={x:0,y:-1};
+        if(k==="arrowdown"||k==="s") s.next={x:0,y:1};
+        if(k==="arrowleft"||k==="a") s.next={x:-1,y:0};
+        if(k==="arrowright"||k==="d") s.next={x:1,y:0};
+      };
 
       function update() {
-        if (state.gameOver) return;
+        if (s.over) return;
 
-        state.frame++;
-        const stepInterval = Math.max(4, 12 - Math.floor(state.score / 5));
-        if (state.frame % stepInterval !== 0) return;
+        s.frame++;
+        if (s.frame%8!==0) return;
 
-        state.dir = state.nextDir;
-        const head = state.snake[0];
-        const newHead = { x: head.x + state.dir.x, y: head.y + state.dir.y };
+        s.dir=s.next;
+        const head=s.snake[0];
+        const nh={x:head.x+s.dir.x,y:head.y+s.dir.y};
 
-        if (newHead.x < 0 || newHead.x >= cols || newHead.y < 0 || newHead.y >= rows) {
-          state.gameOver = true;
-          updateOverlay("Game Over – Score: " + state.score);
+        if(nh.x<0||nh.x>=cols||nh.y<0||nh.y>=rows) {
+          s.over=true;
+          updateOverlay("Game Over – Score: "+s.score);
           return;
         }
 
-        if (state.snake.some((s) => s.x === newHead.x && s.y === newHead.y)) {
-          state.gameOver = true;
-          updateOverlay("Game Over – Score: " + state.score);
+        if(s.snake.some(p=>p.x===nh.x&&p.y===nh.y)) {
+          s.over=true;
+          updateOverlay("Game Over – Score: "+s.score);
           return;
         }
 
-        state.snake.unshift(newHead);
+        s.snake.unshift(nh);
 
-        if (state.food && newHead.x === state.food.x && newHead.y === state.food.y) {
-          state.score += 1;
+        if(nh.x===s.food.x&&nh.y===s.food.y) {
+          s.score++;
+          setScoreboard([{label:"Score",value:s.score}]);
           placeFood();
-          setScoreboard([{ label: "Score", value: state.score }]);
         } else {
-          state.snake.pop();
+          s.snake.pop();
         }
       }
 
       function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
 
-        const bgGrad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-        bgGrad.addColorStop(0, "#020617");
-        bgGrad.addColorStop(1, "#020617");
-        ctx.fillStyle = bgGrad;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle="#f97316";
+        ctx.fillRect(s.food.x*size,s.food.y*size,size,size);
 
-        ctx.strokeStyle = "rgba(30,64,175,0.25)";
-        ctx.lineWidth = 1;
-        for (let x = 0; x <= cols; x++) {
-          ctx.beginPath();
-          ctx.moveTo(x * gridSize + 0.5, 0);
-          ctx.lineTo(x * gridSize + 0.5, canvas.height);
-          ctx.stroke();
-        }
-        for (let y = 0; y <= rows; y++) {
-          ctx.beginPath();
-          ctx.moveTo(0, y * gridSize + 0.5);
-          ctx.lineTo(canvas.width, y * gridSize + 0.5);
-          ctx.stroke();
-        }
-
-        if (state.food) {
-          ctx.fillStyle = "#f97316";
-          ctx.beginPath();
-          ctx.roundRect(
-            state.food.x * gridSize + 4,
-            state.food.y * gridSize + 4,
-            gridSize - 8,
-            gridSize - 8,
-            4
-          );
-          ctx.fill();
-        }
-
-        state.snake.forEach((segment, index) => {
-          const t = index / Math.max(1, state.snake.length - 1);
-          const hue = 160 + t * 80;
-          ctx.fillStyle = `hsl(${hue}, 80%, 55%)`;
-          ctx.beginPath();
-          ctx.roundRect(
-            segment.x * gridSize + 3,
-            segment.y * gridSize + 3,
-            gridSize - 6,
-            gridSize - 6,
-            5
-          );
-          ctx.fill();
+        s.snake.forEach((p,i)=>{
+          ctx.fillStyle=i===0?"#38bdf8":"#0ea5e9";
+          ctx.fillRect(p.x*size,p.y*size,size,size);
         });
-
-        const head = state.snake[0];
-        ctx.fillStyle = "#0f172a";
-        const eyeSize = 3;
-        const hx = head.x * gridSize + gridSize / 2;
-        const hy = head.y * gridSize + gridSize / 2;
-        ctx.beginPath();
-        ctx.arc(hx - 4, hy - 3, eyeSize, 0, Math.PI * 2);
-        ctx.arc(hx + 4, hy - 3, eyeSize, 0, Math.PI * 2);
-        ctx.fill();
       }
 
       function loop() {
-        if (currentGameId !== "snake-neo") return;
+        if(currentGameId!=="snake") return;
         update();
         draw();
-        animationId = requestAnimationFrame(loop);
+        animationId=requestAnimationFrame(loop);
       }
-
       loop();
-
-      return {
-        type: "snake-neo",
-      };
     }
 
-    // ----------------------------------------------------
-    // AB HIER KOMMT TEIL 2 DES CODES
-    // (weitere Spiele + Rest der Logik)
-    // ----------------------------------------------------
-  </script>
-</body>
-</html>
-    // ----------------------------------------------------
-    // SPIEL 3: PONG DUEL
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       SPIEL 3: PONG DUEL
+    ---------------------------------------------------- */
     function initPongDuel() {
-      const state = {
-        leftY: canvas.height / 2 - 40,
-        rightY: canvas.height / 2 - 40,
-        paddleH: 80,
-        paddleW: 12,
-        ballX: canvas.width / 2,
-        ballY: canvas.height / 2,
-        ballVX: 5,
-        ballVY: 3,
-        scoreL: 0,
-        scoreR: 0,
+      const s={
+        ly:canvas.height/2-40,
+        ry:canvas.height/2-40,
+        ph:80,
+        pw:12,
+        bx:canvas.width/2,
+        by:canvas.height/2,
+        vx:5,
+        vy:3,
+        sl:0,
+        sr:0
       };
 
-      setScoreboard([
-        { label: "Links", value: state.scoreL },
-        { label: "Rechts", value: state.scoreR },
-      ]);
-      updateOverlay("W/S links – Pfeile hoch/runter rechts");
+      setScoreboard([{label:"Links",value:s.sl},{label:"Rechts",value:s.sr}]);
+      updateOverlay("W/S links – Pfeile rechts");
 
       function update() {
-        const speed = 6;
-        if (keys["w"]) state.leftY -= speed;
-        if (keys["s"]) state.leftY += speed;
-        if (keys["arrowup"]) state.rightY -= speed;
-        if (keys["arrowdown"]) state.rightY += speed;
+        if(keys["w"]) s.ly-=6;
+        if(keys["s"]) s.ly+=6;
+        if(keys["arrowup"]) s.ry-=6;
+        if(keys["arrowdown"]) s.ry+=6;
 
-        state.leftY = Math.max(0, Math.min(canvas.height - state.paddleH, state.leftY));
-        state.rightY = Math.max(0, Math.min(canvas.height - state.paddleH, state.rightY));
+        s.ly=Math.max(0,Math.min(canvas.height-s.ph,s.ly));
+        s.ry=Math.max(0,Math.min(canvas.height-s.ph,s.ry));
 
-        state.ballX += state.ballVX;
-        state.ballY += state.ballVY;
+        s.bx+=s.vx;
+        s.by+=s.vy;
 
-        if (state.ballY < 0 || state.ballY > canvas.height) state.ballVY *= -1;
+        if(s.by<0||s.by>canvas.height) s.vy*=-1;
 
-        if (
-          state.ballX < 20 &&
-          state.ballY > state.leftY &&
-          state.ballY < state.leftY + state.paddleH
-        ) {
-          state.ballVX *= -1;
-        }
+        if(s.bx<20 && s.by>s.ly && s.by<s.ly+s.ph) s.vx*=-1;
+        if(s.bx>canvas.width-20 && s.by>s.ry && s.by<s.ry+s.ph) s.vx*=-1;
 
-        if (
-          state.ballX > canvas.width - 20 &&
-          state.ballY > state.rightY &&
-          state.ballY < state.rightY + state.paddleH
-        ) {
-          state.ballVX *= -1;
-        }
+        if(s.bx<0){s.sr++;reset();}
+        if(s.bx>canvas.width){s.sl++;reset();}
 
-        if (state.ballX < 0) {
-          state.scoreR++;
-          reset();
-        }
-        if (state.ballX > canvas.width) {
-          state.scoreL++;
-          reset();
-        }
-
-        setScoreboard([
-          { label: "Links", value: state.scoreL },
-          { label: "Rechts", value: state.scoreR },
-        ]);
+        setScoreboard([{label:"Links",value:s.sl},{label:"Rechts",value:s.sr}]);
       }
 
       function reset() {
-        state.ballX = canvas.width / 2;
-        state.ballY = canvas.height / 2;
-        state.ballVX = 5 * (Math.random() > 0.5 ? 1 : -1);
-        state.ballVY = 3 * (Math.random() > 0.5 ? 1 : -1);
+        s.bx=canvas.width/2;
+        s.by=canvas.height/2;
+        s.vx=5*(Math.random()>0.5?1:-1);
+        s.vy=3*(Math.random()>0.5?1:-1);
       }
 
       function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
 
-        ctx.fillStyle = "#38bdf8";
-        ctx.fillRect(10, state.leftY, state.paddleW, state.paddleH);
-        ctx.fillRect(canvas.width - 22, state.rightY, state.paddleW, state.paddleH);
+        ctx.fillStyle="#38bdf8";
+        ctx.fillRect(10,s.ly,s.pw,s.ph);
+        ctx.fillRect(canvas.width-22,s.ry,s.pw,s.ph);
 
         ctx.beginPath();
-        ctx.arc(state.ballX, state.ballY, 8, 0, Math.PI * 2);
-        ctx.fillStyle = "#f97316";
+        ctx.arc(s.bx,s.by,8,0,Math.PI*2);
+        ctx.fillStyle="#f97316";
         ctx.fill();
       }
 
       function loop() {
-        if (currentGameId !== "pong-duel") return;
+        if(currentGameId!=="pong") return;
         update();
         draw();
-        animationId = requestAnimationFrame(loop);
+        animationId=requestAnimationFrame(loop);
       }
-
       loop();
-      return { type: "pong-duel" };
     }
 
-    // ----------------------------------------------------
-    // SPIEL 4: MEMORY CARDS
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       SPIEL 4: MEMORY CARDS
+    ---------------------------------------------------- */
     function initMemoryCards() {
-      const cols = 4;
-      const rows = 3;
-      const total = cols * rows;
+      const symbols=["★","◆","●","▲","♥","☀"];
+      const pool=[...symbols,...symbols].sort(()=>Math.random()-0.5);
 
-      const symbols = ["★","◆","●","▲","♥","☀"];
-      let cards = [];
-      let flipped = [];
-      let matched = 0;
+      const cards=pool.map((sym,i)=>({
+        id:i,
+        sym,
+        x:200+(i%4)*100,
+        y:80+Math.floor(i/4)*120,
+        open:false,
+        done:false
+      }));
 
-      function createCards() {
-        const pool = [...symbols, ...symbols];
-        pool.sort(() => Math.random() - 0.5);
+      let flipped=[];
+      let matched=0;
 
-        cards = pool.map((sym, i) => ({
-          id: i,
-          sym,
-          x: (i % cols) * 100 + 200,
-          y: Math.floor(i / cols) * 120 + 80,
-          open: false,
-          done: false,
-        }));
-      }
+      updateOverlay("Tippe Karten an");
 
-      createCards();
-      updateOverlay("Klicke Karten an");
+      canvas.onclick=e=>{
+        if(currentGameId!=="memory")return;
 
-      canvas.onclick = (e) => {
-        if (currentGameId !== "memory-cards") return;
+        const r=canvas.getBoundingClientRect();
+        const mx=e.clientX-r.left,my=e.clientY-r.top;
 
-        const rect = canvas.getBoundingClientRect();
-        const mx = e.clientX - rect.left;
-        const my = e.clientY - rect.top;
-
-        cards.forEach((c) => {
-          if (
-            mx > c.x && mx < c.x + 80 &&
-            my > c.y && my < c.y + 100 &&
-            !c.open && !c.done
-          ) {
-            c.open = true;
+        cards.forEach(c=>{
+          if(mx>c.x&&mx<c.x+80&&my>c.y&&my<c.y+100&&!c.open&&!c.done){
+            c.open=true;
             flipped.push(c);
 
-            if (flipped.length === 2) {
-              if (flipped[0].sym === flipped[1].sym) {
-                flipped[0].done = true;
-                flipped[1].done = true;
+            if(flipped.length===2){
+              if(flipped[0].sym===flipped[1].sym){
+                flipped[0].done=true;
+                flipped[1].done=true;
                 matched++;
-                if (matched === symbols.length) {
-                  updateOverlay("Geschafft!");
-                }
+                if(matched===symbols.length) updateOverlay("Geschafft!");
               } else {
-                setTimeout(() => {
-                  flipped.forEach((f) => (f.open = false));
-                }, 600);
+                setTimeout(()=>flipped.forEach(f=>f.open=false),600);
               }
-              flipped = [];
+              flipped=[];
             }
           }
         });
       };
 
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        cards.forEach((c) => {
-          ctx.fillStyle = c.open || c.done ? "#1e293b" : "#334155";
-          ctx.fillRect(c.x, c.y, 80, 100);
-
-          ctx.strokeStyle = "#94a3b8";
-          ctx.strokeRect(c.x, c.y, 80, 100);
-
-          if (c.open || c.done) {
-            ctx.fillStyle = "#f8fafc";
-            ctx.font = "40px system-ui";
-            ctx.fillText(c.sym, c.x + 22, c.y + 62);
+      function draw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        cards.forEach(c=>{
+          ctx.fillStyle=c.open||c.done?"#1e293b":"#334155";
+          ctx.fillRect(c.x,c.y,80,100);
+          ctx.strokeStyle="#94a3b8";
+          ctx.strokeRect(c.x,c.y,80,100);
+          if(c.open||c.done){
+            ctx.fillStyle="#f8fafc";
+            ctx.font="40px system-ui";
+            ctx.fillText(c.sym,c.x+22,c.y+62);
           }
         });
       }
 
-      function loop() {
-        if (currentGameId !== "memory-cards") return;
+      function loop(){
+        if(currentGameId!=="memory")return;
         draw();
-        animationId = requestAnimationFrame(loop);
+        animationId=requestAnimationFrame(loop);
       }
-
       loop();
-      return { type: "memory-cards" };
     }
 
-    // ----------------------------------------------------
-    // SPIEL 5: FLAPPY SQUARE
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       SPIEL 5: FLAPPY SQUARE
+    ---------------------------------------------------- */
     function initFlappySquare() {
-      const state = {
-        x: 150,
-        y: canvas.height / 2,
-        vy: 0,
-        gravity: 0.5,
-        flap: -8,
-        pipes: [],
-        frame: 0,
-        score: 0,
-        over: false,
+      const s={
+        x:150,
+        y:canvas.height/2,
+        vy:0,
+        gravity:0.5,
+        flap:-8,
+        pipes:[],
+        frame:0,
+        score:0,
+        over:false
       };
 
-      function spawnPipe() {
-        const gap = 140;
-        const top = Math.random() * (canvas.height - gap - 100) + 50;
-        state.pipes.push({
-          x: canvas.width,
-          top,
-          bottom: top + gap,
-        });
+      canvas.onclick=()=>{if(currentGameId==="flappy")s.vy=s.flap;};
+      window.onkeydown=e=>{if(currentGameId==="flappy"&&e.code==="Space")s.vy=s.flap;};
+
+      updateOverlay("Tippen / Space");
+      setScoreboard([{label:"Score",value:s.score}]);
+
+      function spawn(){
+        const gap=140;
+        const top=Math.random()*(canvas.height-gap-100)+50;
+        s.pipes.push({x:canvas.width,top,bottom:top+gap});
       }
 
-      canvas.onclick = () => {
-        if (currentGameId !== "flappy-square") return;
-        state.vy = state.flap;
-      };
-      window.onkeydown = (e) => {
-        if (currentGameId !== "flappy-square") return;
-        if (e.code === "Space") state.vy = state.flap;
-      };
+      function update(){
+        if(s.over)return;
 
-      updateOverlay("Klick / Leertaste zum Flappen");
-      setScoreboard([{ label: "Score", value: state.score }]);
+        s.frame++;
+        if(s.frame%90===0)spawn();
 
-      function update() {
-        if (state.over) return;
+        s.vy+=s.gravity;
+        s.y+=s.vy;
 
-        state.frame++;
-        if (state.frame % 90 === 0) spawnPipe();
-
-        state.vy += state.gravity;
-        state.y += state.vy;
-
-        if (state.y < 0 || state.y > canvas.height) {
-          state.over = true;
-          updateOverlay("Game Over – Score: " + state.score);
+        if(s.y<0||s.y>canvas.height){
+          s.over=true;
+          updateOverlay("Game Over – Score: "+s.score);
         }
 
-        state.pipes.forEach((p) => {
-          p.x -= 3;
-
-          if (p.x < state.x + 20 && p.x + 60 > state.x) {
-            if (state.y < p.top || state.y > p.bottom) {
-              state.over = true;
-              updateOverlay("Game Over – Score: " + state.score);
+        s.pipes.forEach(p=>{
+          p.x-=3;
+          if(p.x< s.x+20 && p.x+60> s.x){
+            if(s.y<p.top||s.y>p.bottom){
+              s.over=true;
+              updateOverlay("Game Over – Score: "+s.score);
             }
           }
-
-          if (p.x + 60 === state.x) {
-            state.score++;
-            setScoreboard([{ label: "Score", value: state.score }]);
+          if(p.x+60===s.x){
+            s.score++;
+            setScoreboard([{label:"Score",value:s.score}]);
           }
         });
 
-        state.pipes = state.pipes.filter((p) => p.x > -60);
+        s.pipes=s.pipes.filter(p=>p.x>-60);
       }
 
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      function draw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
 
-        ctx.fillStyle = "#38bdf8";
-        ctx.fillRect(state.x, state.y, 20, 20);
+        ctx.fillStyle="#38bdf8";
+        ctx.fillRect(s.x,s.y,20,20);
 
-        ctx.fillStyle = "#22c55e";
-        state.pipes.forEach((p) => {
-          ctx.fillRect(p.x, 0, 60, p.top);
-          ctx.fillRect(p.x, p.bottom, 60, canvas.height - p.bottom);
+        ctx.fillStyle="#22c55e";
+        s.pipes.forEach(p=>{
+          ctx.fillRect(p.x,0,60,p.top);
+          ctx.fillRect(p.x,p.bottom,60,canvas.height-p.bottom);
         });
       }
 
-      function loop() {
-        if (currentGameId !== "flappy-square") return;
+      function loop(){
+        if(currentGameId!=="flappy")return;
         update();
         draw();
-        animationId = requestAnimationFrame(loop);
+        animationId=requestAnimationFrame(loop);
       }
-
       loop();
-      return { type: "flappy-square" };
     }
 
-    // ----------------------------------------------------
-    // SPIEL 6: NEON RUNNER
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       SPIEL 6: NEON RUNNER
+    ---------------------------------------------------- */
     function initNeonRunner() {
-      const state = {
-        x: 120,
-        y: canvas.height - 60,
-        vy: 0,
-        gravity: 0.6,
-        jump: -12,
-        obstacles: [],
-        frame: 0,
-        score: 0,
-        over: false,
+      const s={
+        x:120,
+        y:canvas.height-60,
+        vy:0,
+        gravity:0.6,
+        jump:-12,
+        obs:[],
+        frame:0,
+        score:0,
+        over:false
       };
 
-      function spawnObstacle() {
-        state.obstacles.push({
+      window.onkeydown=e=>{
+        if(currentGameId!=="runner")return;
+        if(e.code==="Space"||e.code==="ArrowUp"){
+          if(s.y>=canvas.height-60)s.vy=s.jump;
+        }
+      };
+
+      canvas.onclick=()=>{if(currentGameId==="runner"&&s.y>=canvas.height-60)s.vy=s.jump;};
+
+      updateOverlay("Tippen / Space");
+      setScoreboard([{label:"Score",value:s.score}]);
+
+      function spawn(){
+      /* Hindernis spawnen */
+      function spawn() {
+        s.obs.push({
           x: canvas.width,
           w: 30,
-          h: 40,
+          h: 40
         });
       }
 
-      window.onkeydown = (e) => {
-        if (currentGameId !== "endless-runner") return;
-        if (e.code === "Space" || e.code === "ArrowUp") {
-          if (state.y >= canvas.height - 60) {
-            state.vy = state.jump;
-          }
-        }
-      };
-
-      updateOverlay("Leertaste / Pfeil hoch zum Springen");
-      setScoreboard([{ label: "Score", value: state.score }]);
-
       function update() {
-        if (state.over) return;
+        if (s.over) return;
 
-        state.frame++;
-        if (state.frame % 80 === 0) spawnObstacle();
+        s.frame++;
+        if (s.frame % 80 === 0) spawn();
 
-        state.vy += state.gravity;
-        state.y += state.vy;
+        s.vy += s.gravity;
+        s.y += s.vy;
 
-        if (state.y > canvas.height - 60) {
-          state.y = canvas.height - 60;
-          state.vy = 0;
+        if (s.y > canvas.height - 60) {
+          s.y = canvas.height - 60;
+          s.vy = 0;
         }
 
-        state.obstacles.forEach((o) => {
+        s.obs.forEach(o => {
           o.x -= 6;
 
           if (
-            o.x < state.x + 30 &&
-            o.x + o.w > state.x &&
-            state.y + 40 > canvas.height - o.h
+            o.x < s.x + 30 &&
+            o.x + o.w > s.x &&
+            s.y + 40 > canvas.height - o.h
           ) {
-            state.over = true;
-            updateOverlay("Game Over – Score: " + state.score);
+            s.over = true;
+            updateOverlay("Game Over – Score: " + s.score);
           }
 
-          if (o.x + o.w === state.x) {
-            state.score++;
-            setScoreboard([{ label: "Score", value: state.score }]);
+          if (o.x + o.w === s.x) {
+            s.score++;
+            setScoreboard([{ label: "Score", value: s.score }]);
           }
         });
 
-        state.obstacles = state.obstacles.filter((o) => o.x > -40);
+        s.obs = s.obs.filter(o => o.x > -40);
       }
 
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = "#6366f1";
-        ctx.fillRect(state.x, state.y, 30, 40);
+        ctx.fillRect(s.x, s.y, 30, 40);
 
         ctx.fillStyle = "#f97316";
-        state.obstacles.forEach((o) => {
+        s.obs.forEach(o => {
           ctx.fillRect(o.x, canvas.height - o.h, o.w, o.h);
         });
       }
 
       function loop() {
-        if (currentGameId !== "endless-runner") return;
+        if (currentGameId !== "runner") return;
         update();
         draw();
         animationId = requestAnimationFrame(loop);
       }
-
       loop();
-      return { type: "endless-runner" };
     }
 
-    // ----------------------------------------------------
-    // AB HIER KOMMT TEIL 3
-    // ----------------------------------------------------
-    // ----------------------------------------------------
-    // SPIEL 7: TIC TAC TOE+
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       SPIEL 7: TIC TAC TOE+
+    ---------------------------------------------------- */
     function initTicTacToePlus() {
       const board = Array(9).fill(null);
       let player = "X";
-      let gameOver = false;
+      let over = false;
 
-      updateOverlay("Klicke ein Feld – du bist X");
+      updateOverlay("Du bist X – tippe ein Feld");
 
-      canvas.onclick = (e) => {
-        if (currentGameId !== "tictactoe") return;
-        if (gameOver) return;
+      canvas.onclick = e => {
+        if (currentGameId !== "tictactoe" || over) return;
 
-        const rect = canvas.getBoundingClientRect();
-        const mx = e.clientX - rect.left;
-        const my = e.clientY - rect.top;
+        const r = canvas.getBoundingClientRect();
+        const mx = e.clientX - r.left;
+        const my = e.clientY - r.top;
 
-        const cell = Math.floor(mx / (canvas.width / 3)) + Math.floor(my / (canvas.height / 3)) * 3;
+        const cell = Math.floor(mx / (canvas.width / 3)) +
+                     Math.floor(my / (canvas.height / 3)) * 3;
 
         if (!board[cell]) {
           board[cell] = "X";
-          if (checkWin("X")) {
-            gameOver = true;
-            updateOverlay("Du hast gewonnen!");
-          } else if (board.every((c) => c)) {
-            gameOver = true;
-            updateOverlay("Unentschieden");
-          } else {
-            botMove();
-          }
+          if (check("X")) return end("Du hast gewonnen!");
+          if (board.every(c => c)) return end("Unentschieden");
+          bot();
         }
       };
 
-      function botMove() {
-        const empty = board.map((v, i) => (v ? null : i)).filter((v) => v !== null);
+      function bot() {
+        const empty = board.map((v, i) => v ? null : i).filter(v => v !== null);
         const pick = empty[Math.floor(Math.random() * empty.length)];
         board[pick] = "O";
-
-        if (checkWin("O")) {
-          gameOver = true;
-          updateOverlay("Bot gewinnt!");
-        } else if (board.every((c) => c)) {
-          gameOver = true;
-          updateOverlay("Unentschieden");
-        }
+        if (check("O")) return end("Bot gewinnt!");
       }
 
-      function checkWin(p) {
-        const wins = [
+      function check(p) {
+        const w = [
           [0,1,2],[3,4,5],[6,7,8],
           [0,3,6],[1,4,7],[2,5,8],
           [0,4,8],[2,4,6]
         ];
-        return wins.some((w) => w.every((i) => board[i] === p));
+        return w.some(a => a.every(i => board[i] === p));
+      }
+
+      function end(msg) {
+        over = true;
+        updateOverlay(msg);
       }
 
       function draw() {
@@ -1441,15 +853,15 @@
         ctx.lineWidth = 4;
 
         ctx.beginPath();
-        ctx.moveTo(canvas.width / 3, 0);
-        ctx.lineTo(canvas.width / 3, canvas.height);
-        ctx.moveTo((canvas.width / 3) * 2, 0);
-        ctx.lineTo((canvas.width / 3) * 2, canvas.height);
+        ctx.moveTo(canvas.width/3, 0);
+        ctx.lineTo(canvas.width/3, canvas.height);
+        ctx.moveTo((canvas.width/3)*2, 0);
+        ctx.lineTo((canvas.width/3)*2, canvas.height);
 
-        ctx.moveTo(0, canvas.height / 3);
-        ctx.lineTo(canvas.width, canvas.height / 3);
-        ctx.moveTo(0, (canvas.height / 3) * 2);
-        ctx.lineTo(canvas.width, (canvas.height / 3) * 2);
+        ctx.moveTo(0, canvas.height/3);
+        ctx.lineTo(canvas.width, canvas.height/3);
+        ctx.moveTo(0, (canvas.height/3)*2);
+        ctx.lineTo(canvas.width, (canvas.height/3)*2);
         ctx.stroke();
 
         ctx.font = "80px system-ui";
@@ -1471,52 +883,47 @@
         draw();
         animationId = requestAnimationFrame(loop);
       }
-
       loop();
-      return { type: "tictactoe" };
     }
 
-    // ----------------------------------------------------
-    // SPIEL 8: REACTION TEST
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       SPIEL 8: REACTION TEST
+    ---------------------------------------------------- */
     function initReactionTest() {
       let state = "wait";
-      let startTime = 0;
-      let result = null;
+      let start = 0;
 
       updateOverlay("Warte auf Grün…");
 
       canvas.onclick = () => {
-        if (currentGameId !== "reaction-test") return;
+        if (currentGameId !== "reaction") return;
 
         if (state === "wait") {
-          updateOverlay("Zu früh! Warte auf Grün.");
+          updateOverlay("Zu früh!");
           state = "fail";
         } else if (state === "ready") {
-          const now = performance.now();
-          result = Math.floor(now - startTime);
-          updateOverlay("Reaktionszeit: " + result + " ms");
+          const t = performance.now() - start;
+          updateOverlay("Reaktionszeit: " + Math.floor(t) + " ms");
           state = "done";
-        } else if (state === "done" || state === "fail") {
-          start();
+        } else {
+          startTest();
         }
       };
 
-      function start() {
+      function startTest() {
         state = "wait";
-        result = null;
         updateOverlay("Warte auf Grün…");
 
         const delay = Math.random() * 2000 + 1000;
         setTimeout(() => {
-          if (currentGameId !== "reaction-test") return;
+          if (currentGameId !== "reaction") return;
           state = "ready";
-          startTime = performance.now();
+          start = performance.now();
           updateOverlay("KLICK!");
         }, delay);
       }
 
-      start();
+      startTest();
 
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1527,89 +934,80 @@
         if (state === "done") ctx.fillStyle = "#0ea5e9";
 
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = "#f8fafc";
-        ctx.font = "40px system-ui";
-        ctx.textAlign = "center";
-        ctx.fillText(
-          state === "wait" ? "Warte…" :
-          state === "ready" ? "KLICK!" :
-          state === "fail" ? "Zu früh!" :
-          "Nochmal klicken",
-          canvas.width / 2,
-          canvas.height / 2
-        );
       }
 
       function loop() {
-        if (currentGameId !== "reaction-test") return;
+        if (currentGameId !== "reaction") return;
         draw();
         animationId = requestAnimationFrame(loop);
       }
-
       loop();
-      return { type: "reaction-test" };
     }
 
-    // ----------------------------------------------------
-    // SPIEL 9: SPACE AVOIDER
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       SPIEL 9: SPACE AVOIDER
+    ---------------------------------------------------- */
     function initSpaceAvoider() {
-      const state = {
+      const s = {
         x: canvas.width / 2,
         y: canvas.height - 80,
         speed: 6,
-        asteroids: [],
+        ast: [],
         frame: 0,
         score: 0,
-        over: false,
+        over: false
       };
 
-      updateOverlay("Pfeiltasten / WASD zum Bewegen");
-      setScoreboard([{ label: "Score", value: state.score }]);
+      updateOverlay("WASD / Pfeile / Touch");
+      setScoreboard([{ label: "Score", value: s.score }]);
 
-      function spawnAsteroid() {
-        state.asteroids.push({
+      function spawn() {
+        s.ast.push({
           x: Math.random() * canvas.width,
           y: -40,
           r: 20 + Math.random() * 20,
-          vy: 3 + Math.random() * 3,
+          vy: 3 + Math.random() * 3
         });
       }
 
       function update() {
-        if (state.over) return;
+        if (s.over) return;
 
-        state.frame++;
-        if (state.frame % 40 === 0) spawnAsteroid();
+        s.frame++;
+        if (s.frame % 40 === 0) spawn();
 
-        if (keys["arrowleft"] || keys["a"]) state.x -= state.speed;
-        if (keys["arrowright"] || keys["d"]) state.x += state.speed;
-        if (keys["arrowup"] || keys["w"]) state.y -= state.speed;
-        if (keys["arrowdown"] || keys["s"]) state.y += state.speed;
+        if (keys["arrowleft"] || keys["a"]) s.x -= s.speed;
+        if (keys["arrowright"] || keys["d"]) s.x += s.speed;
+        if (keys["arrowup"] || keys["w"]) s.y -= s.speed;
+        if (keys["arrowdown"] || keys["s"]) s.y += s.speed;
 
-        state.x = Math.max(20, Math.min(canvas.width - 20, state.x));
-        state.y = Math.max(20, Math.min(canvas.height - 20, state.y));
+        if (window._spaceTouch) {
+          s.x = window._spaceTouch.x;
+          s.y = window._spaceTouch.y;
+        }
 
-        state.asteroids.forEach((a) => {
+        s.x = Math.max(20, Math.min(canvas.width - 20, s.x));
+        s.y = Math.max(20, Math.min(canvas.height - 20, s.y));
+
+        s.ast.forEach(a => {
           a.y += a.vy;
 
-          const dx = a.x - state.x;
-          const dy = a.y - state.y;
+          const dx = a.x - s.x;
+          const dy = a.y - s.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < a.r + 20) {
-            state.over = true;
-            updateOverlay("Game Over – Score: " + state.score);
+            s.over = true;
+            updateOverlay("Game Over – Score: " + s.score);
           }
 
           if (a.y > canvas.height + 40) {
-            state.score++;
-            setScoreboard([{ label: "Score", value: state.score }]);
+            s.score++;
+            setScoreboard([{ label: "Score", value: s.score }]);
           }
         });
 
-        state.asteroids = state.asteroids.filter((a) => a.y < canvas.height + 60);
+        s.ast = s.ast.filter(a => a.y < canvas.height + 60);
       }
 
       function draw() {
@@ -1617,11 +1015,11 @@
 
         ctx.fillStyle = "#38bdf8";
         ctx.beginPath();
-        ctx.arc(state.x, state.y, 20, 0, Math.PI * 2);
+        ctx.arc(s.x, s.y, 20, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "#f97316";
-        state.asteroids.forEach((a) => {
+        s.ast.forEach(a => {
           ctx.beginPath();
           ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
           ctx.fill();
@@ -1629,41 +1027,38 @@
       }
 
       function loop() {
-        if (currentGameId !== "space-avoid") return;
+        if (currentGameId !== "space") return;
         update();
         draw();
         animationId = requestAnimationFrame(loop);
       }
-
       loop();
-      return { type: "space-avoid" };
     }
 
-    // ----------------------------------------------------
-    // SPIEL 10: CONNECT 4 LITE
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       SPIEL 10: CONNECT 4 LITE
+    ---------------------------------------------------- */
     function initConnect4Lite() {
       const cols = 7;
       const rows = 6;
       const grid = Array(rows).fill(null).map(() => Array(cols).fill(null));
       let player = "red";
-      let gameOver = false;
+      let over = false;
 
-      updateOverlay("Klicke eine Spalte");
+      updateOverlay("Tippe eine Spalte");
 
-      canvas.onclick = (e) => {
-        if (currentGameId !== "connect4") return;
-        if (gameOver) return;
+      canvas.onclick = e => {
+        if (currentGameId !== "connect4" || over) return;
 
-        const rect = canvas.getBoundingClientRect();
-        const mx = e.clientX - rect.left;
+        const r = canvas.getBoundingClientRect();
+        const mx = e.clientX - r.left;
         const col = Math.floor(mx / (canvas.width / cols));
 
-        for (let r = rows - 1; r >= 0; r--) {
-          if (!grid[r][col]) {
-            grid[r][col] = player;
-            if (checkWin(r, col)) {
-              gameOver = true;
+        for (let row = rows - 1; row >= 0; row--) {
+          if (!grid[row][col]) {
+            grid[row][col] = player;
+            if (check(row, col)) {
+              over = true;
               updateOverlay((player === "red" ? "Rot" : "Gelb") + " gewinnt!");
             }
             player = player === "red" ? "yellow" : "red";
@@ -1672,21 +1067,21 @@
         }
       };
 
-      function checkWin(r, c) {
+      function check(r, c) {
         const color = grid[r][c];
         const dirs = [
-          [1,0],[0,1],[1,1],[1,-1]
+          [1, 0], [0, 1], [1, 1], [1, -1]
         ];
-        for (const [dx,dy] of dirs) {
+        for (const [dx, dy] of dirs) {
           let count = 1;
-          for (let i=1;i<4;i++) {
-            const nr = r + dy*i, nc = c + dx*i;
-            if (nr<0||nr>=rows||nc<0||nc>=cols||grid[nr][nc]!==color) break;
+          for (let i = 1; i < 4; i++) {
+            const nr = r + dy * i, nc = c + dx * i;
+            if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || grid[nr][nc] !== color) break;
             count++;
           }
-          for (let i=1;i<4;i++) {
-            const nr = r - dy*i, nc = c - dx*i;
-            if (nr<0||nr>=rows||nc<0||nc>=cols||grid[nr][nc]!==color) break;
+          for (let i = 1; i < 4; i++) {
+            const nr = r - dy * i, nc = c - dx * i;
+            if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || grid[nr][nc] !== color) break;
             count++;
           }
           if (count >= 4) return true;
@@ -1703,18 +1098,19 @@
         ctx.fillStyle = "#1e3a8a";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        for (let r=0;r<rows;r++) {
-          for (let c=0;c<cols;c++) {
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
             ctx.beginPath();
             ctx.arc(
-              c * cw + cw/2,
-              r * ch + ch/2,
-              Math.min(cw,ch)/2 - 10,
-              0, Math.PI*2
+              c * cw + cw / 2,
+              r * ch + ch / 2,
+              Math.min(cw, ch) / 2 - 10,
+              0, Math.PI * 2
             );
-            ctx.fillStyle = grid[r][c] === "red" ? "#ef4444" :
-                            grid[r][c] === "yellow" ? "#eab308" :
-                            "#0f172a";
+            ctx.fillStyle =
+              grid[r][c] === "red" ? "#ef4444" :
+              grid[r][c] === "yellow" ? "#eab308" :
+              "#0f172a";
             ctx.fill();
           }
         }
@@ -1725,17 +1121,12 @@
         draw();
         animationId = requestAnimationFrame(loop);
       }
-
       loop();
-      return { type: "connect4" };
     }
 
-    // ----------------------------------------------------
-    // ENDE TEIL 3 – TEIL 4 FOLGT
-    // ----------------------------------------------------
-    // ----------------------------------------------------
-    // MOBILE-OPTIMIERUNG: CANVAS AUTOMATISCH SKALIEREN
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       MOBILE CANVAS SCALING
+    ---------------------------------------------------- */
     function resizeCanvas() {
       const baseW = 800;
       const baseH = 480;
@@ -1752,60 +1143,47 @@
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-
-    // ----------------------------------------------------
-    // MOBILE-TOUCH-STEUERUNG FÜR SPIELE
-    // ----------------------------------------------------
-
-    // Snake: Wischgesten
+    /* ----------------------------------------------------
+       TOUCH-STEUERUNG FÜR SNAKE & SPACE
+    ---------------------------------------------------- */
     let touchStartX = 0;
     let touchStartY = 0;
 
-    canvas.addEventListener("touchstart", (e) => {
+    canvas.addEventListener("touchstart", e => {
       const t = e.touches[0];
       touchStartX = t.clientX;
       touchStartY = t.clientY;
     });
 
-    canvas.addEventListener("touchmove", (e) => {
-      if (currentGameId !== "snake-neo") return;
-
+    canvas.addEventListener("touchmove", e => {
       const t = e.touches[0];
       const dx = t.clientX - touchStartX;
       const dy = t.clientY - touchStartY;
 
-      if (Math.abs(dx) > Math.abs(dy)) {
-        if (dx > 20) keys["arrowright"] = true;
-        if (dx < -20) keys["arrowleft"] = true;
-      } else {
-        if (dy > 20) keys["arrowdown"] = true;
-        if (dy < -20) keys["arrowup"] = true;
+      if (currentGameId === "snake") {
+        if (Math.abs(dx) > Math.abs(dy)) {
+          if (dx > 20) keys["arrowright"] = true;
+          if (dx < -20) keys["arrowleft"] = true;
+        } else {
+          if (dy > 20) keys["arrowdown"] = true;
+          if (dy < -20) keys["arrowup"] = true;
+        }
+      }
+
+      if (currentGameId === "space") {
+        const r = canvas.getBoundingClientRect();
+        window._spaceTouch = {
+          x: t.clientX - r.left,
+          y: t.clientY - r.top
+        };
       }
     });
 
-    // Space Avoider: Finger bewegen = Spieler bewegen
-    canvas.addEventListener("touchmove", (e) => {
-      if (currentGameId !== "space-avoid") return;
-
-      const rect = canvas.getBoundingClientRect();
-      const t = e.touches[0];
-      const x = t.clientX - rect.left;
-      const y = t.clientY - rect.top;
-
-      // Spielerposition direkt setzen
-      // (wird im Spiel selbst begrenzt)
-      window._spaceTouch = { x, y };
-    });
-
-
-    // ----------------------------------------------------
-    // INITIALISIERUNG DER SPIELELISTE
-    // ----------------------------------------------------
+    /* ----------------------------------------------------
+       START
+    ---------------------------------------------------- */
     renderGameList();
-
-    // Standard: Kein Spiel ausgewählt
     updateOverlay("Wähle links ein Spiel aus");
-
   </script>
 </body>
 </html>
